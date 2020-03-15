@@ -1,27 +1,50 @@
 import React from 'react';
 
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
 
-function App() {
+const App = () => {
+  const [state, setState] = React.useState({
+    celsius: ''
+  });
+  const [result, setResult] = React.useState(0);
+
+  const handleCelsius = (evt: any) => {
+    setState({ celsius: evt.target.value });
+  };
+
+  const celsiusToFahrenheit = () => {
+    const celsius = parseInt(state.celsius);
+    setResult(celsius * 1.8 + 32);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='container-fluid p-3 my-3'>
+      <h1>Convert Celsius to Fahrenheit</h1>
+      <form onSubmit={celsiusToFahrenheit}>
+        <div className='form-group'>
+          <label htmlFor='celsius'>Celsius:</label>
+          <input
+            type='number'
+            className='form-control'
+            value={state.celsius}
+            name='celsius'
+            onChange={handleCelsius}
+          />
+        </div>
+        <button type='submit' className='btn btn-primary'>
+          Submit
+        </button>
+        <button type='reset' className='btn btn-default'>
+          Clear
+        </button>
+      </form>
+      <div className='container-fluid'>
+        <div className='row'>
+          <h5 id='result'>Fahrenheit: {result}</h5>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
 export default App;
